@@ -1,0 +1,50 @@
+﻿@model SnaFoo.Models.Snack
+
+<div class="shelf shelf_2">
+    <div class="error suggestionMax isHidden">
+        You have attempted to add more than the allowed number of suggestions per month!
+        <br />There is a total of one allowed suggestions per month.
+    </div>
+    <div class="error isHidden">You have attepted to add a suggestion that already exists!</div>
+    <div class="error inCompleteForm isHidden">You have not completed information requested.</div>
+</div>
+<div class="content-centered">
+    <div class="shelf shelf_2">
+    @using (Html.BeginForm("Suggest", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+            <fieldset class="shelf shelf_2">
+                <div class="shelf shelf_2">
+                    <div class="shelf">
+                        <label for="snackOptions">
+                            <h2 class="hdg hdg_2">Select a snack from the list</h2>
+                        </label>
+                    </div>
+                    @Html.DropDownListFor(model => model.Id, new SelectList((List<SnaFoo.Models.Snack>)ViewData["snacks"], "Id", "Name"))
+                    @*"--Select Snack--"*@
+                </div>
+            </fieldset>
+            <div class="shelf shelf_5">
+                <p class="hdg hdg_1">or</p>
+            </div>
+            <fieldset class="shelf shelf_5">
+                <div class="shelf">
+                    <label for="suggestionInput">
+                        <h2 class="hdg hdg_2">Enter new snack suggestion &amp; purchasing location</h2>
+                    </label>
+                </div>
+                <div class="shelf">
+                    @Html.EditorFor(model => model.Name, "Name", "Name")
+                </div>
+                <div class="shelf">
+                    @Html.EditorFor(model => model.PurchaseLocations, "PurchaseLocations", "PurchaseLocations")
+                </div>
+            </fieldset>
+            <input type="submit" value="Suggest" class="btn btn-default">
+    }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
